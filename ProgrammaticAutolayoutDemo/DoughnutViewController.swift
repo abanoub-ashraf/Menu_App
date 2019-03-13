@@ -2,8 +2,6 @@ import UIKit
 
 class DoughnutViewController: UIViewController {
 
-    //MARK: - Properties and Actions
-
     // Configuration goes here
     var menuItem = "Doughnut"
     var font = UIFont(name: "Avenir", size: 22)
@@ -15,12 +13,13 @@ class DoughnutViewController: UIViewController {
     var backButton = UIButton(type: .system)
     var orderButton = UIButton(type: .system)
 
-    //Actions
+    // Actions
     @IBAction func backButton(_ sender:UIButton) {
         navigationController?.popViewController(animated: true)
     }
     
     //MARK: - Setup Methods
+
     func addImageView() {
         let image = UIImage(named: menuItem)
         imageView = UIImageView(image: image)
@@ -65,29 +64,22 @@ class DoughnutViewController: UIViewController {
     }
 
     //MARK: Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = menuItem
         addViews()
         layoutViews()
     }
-    
-    
+
     //MARK: - Layout
     
-    //Layout your views here
-    func layoutViews(){
+    // Layout your views here
+    func layoutViews() {
+        imageView.frame = CGRect(x: 30, y: 30, width: 400, height: 400)
+        label.frame = CGRect(x: 30, y: 30, width: 400, height: 40)
+        backButton.frame = CGRect(x: 30, y: 450, width: 195, height: 40)
+        orderButton.frame = CGRect(x: 235, y: 450, width: 195, height: 40)
     }
-    
-    
-    
+
 }
-
-
-
-
-
-
-
-
-
