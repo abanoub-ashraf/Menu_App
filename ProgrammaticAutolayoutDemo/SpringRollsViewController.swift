@@ -72,10 +72,81 @@ class SpringRollsViewController: UIViewController {
     //MARK: - Layout
     
     //Layout your views here
-    func layoutViews(){
-        
+    func layoutViews() {
+        navigationController?.isNavigationBarHidden = true
+        imageView.contentMode = .scaleAspectFit
+
+        // first nested stack view
+        let buttonStack: [UIView] = [orderButton, backButton]
+        let buttonStackView = UIStackView(arrangedSubviews: buttonStack)
+        buttonStackView.axis = .vertical
+        buttonStackView.alignment = .fill
+        buttonStackView.distribution = .fill
+        buttonStackView.spacing = 10
+
+        // second nested stack view
+        let labelStack: [UIView] = [label, imageView]
+        let labelStackView = UIStackView(arrangedSubviews: labelStack)
+        labelStackView.axis = .vertical
+        labelStackView.alignment = .fill
+        labelStackView.distribution = .fill
+        labelStackView.spacing = 10
+
+        // container stack view
+        let subViews: [UIView] = [labelStackView, buttonStackView]
+        let stackView = UIStackView(arrangedSubviews: subViews)
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 10
+
+        view.addSubview(stackView)
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        var constraints = [NSLayoutConstraint]()
+
+        constraints += NSLayoutConstraint.constraints(
+                withVisualFormat: "H:|-[stackView]-|",
+                options: .alignAllCenterY,
+                metrics: nil,
+                views: ["stackView": stackView]
+        )
+
+        constraints += NSLayoutConstraint.constraints(
+                withVisualFormat: "V:|-[stackView]-|",
+                options: .alignAllCenterX,
+                metrics: nil,
+                views: ["stackView": stackView]
+        )
+
+        // buttonStackView.width = stackView.width * 2/9
+        constraints += [NSLayoutConstraint.init(
+                item: buttonStackView, attribute: .width,
+                relatedBy: .equal,
+                toItem: stackView, attribute: .width,
+                multiplier: 2/9, constant: 0.0
+        )]
+
+        // backButton.height = buttonStackView.height * 3/9
+        constraints += [NSLayoutConstraint.init(
+                item: backButton, attribute: .height,
+                relatedBy: .equal,
+                toItem: buttonStackView, attribute: .height,
+                multiplier: 3/9, constant: 0.0
+        )]
+
+        // label.height = labelStackView.height * 1/9
+        constraints += [NSLayoutConstraint.init(
+                item: label, attribute: .height,
+                relatedBy: .equal,
+                toItem: labelStackView, attribute: .height,
+                multiplier: 1/9, constant: 0.0
+        )]
+
+        // activate the array of constraints
+        NSLayoutConstraint.activate(constraints)
     }
-    
     
 }
 
