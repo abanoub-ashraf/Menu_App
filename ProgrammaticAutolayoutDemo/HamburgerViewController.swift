@@ -107,15 +107,17 @@ class HamburgerViewController: UIViewController {
         // value between 2 dashes represent the space you want between the views
         // | defaults to the safeView if there's no spacing, and to the super view if there is
         /**** 15 between backButton's leading and super view's leading
-              150 between backButton's trailing and orderButton's leading
-              15 between orderButton's trailing and super view's trailing ****/
-        let horizontalConstraints = "H:|-15-[backButton]-150-[orderButton]-15-|"
+              10 between backButton's trailing and orderButton's leading
+              default value between orderButton's trailing and super view's trailing ****/
+        // to make the size of the backButton is equal to the size of the orderButton
+        //let horizontalConstraints = "H:|-15-[backButton(==orderButton)]-10-[orderButton]-|"
+        let horizontalConstraints = "H:|-15-[backButton]-10-[orderButton]-|"
 
         // this tells auto layout this is a vertical constraint (from top to down)
         // pin tha backButton to the safe view's top with 20 of space
         // [backButton]" means the bottom of the backButton will float
         // the 20 was making the button cross the safe area so remove it just | means don't cross it
-        let verticalConstraints = "V:|-[backButton]"
+        let verticalConstraints = "V:|-[backButton(70)]"
 
         // pin the leading and trailing of the label with the leading and trailing of safe view
         let labelHConstraints = "H:|-[label]-|"
@@ -124,7 +126,8 @@ class HamburgerViewController: UIViewController {
               20 between the top of the label with the bottom of the image
               the top of the image will float ****/
         // V:[label] means the top of the label will float
-        let labelVConstraints = "V:[imageView]-20-[label]-20-|"
+        // (100) is the size we set to the label
+        let labelVConstraints = "V:[imageView]-20-[label(100)]-20-|"
 
         // MARK: - Append to the array
 
@@ -163,6 +166,42 @@ class HamburgerViewController: UIViewController {
                 metrics: metrics,
                 views: views
         )
+
+        // imageView.width = label.width
+        constraints += [NSLayoutConstraint.init(
+                item: imageView, attribute: .width,
+                relatedBy: .equal,
+                toItem: label, attribute: .width,
+                multiplier: 1.0, constant: 0.0
+        )]
+
+        // aspect ratio for the image, aspectFit needs it to work
+        // imageView.width = imageView.height * 3/2
+        constraints += [NSLayoutConstraint.init(
+                item: imageView, attribute: .width,
+                relatedBy: .equal,
+                toItem: imageView, attribute: .height,
+                multiplier: 3/2, constant: 0.0
+        )]
+
+        // orderButton.width = backButton.width * 3/2
+        constraints += [NSLayoutConstraint.init(
+                item: orderButton, attribute: .width,
+                relatedBy: .equal,
+                toItem: backButton, attribute: .width,
+                multiplier: 3/2, constant: 0.0
+        )]
+
+        // orderButton.height = backButton.height
+        /**** now the value 70 in this line
+              "let verticalConstraints = "V:|-[backButton(70)]"" above
+              is gonna be the height of them both ****/
+        constraints += [NSLayoutConstraint.init(
+                item: orderButton, attribute: .height,
+                relatedBy: .equal,
+                toItem: backButton, attribute: .height,
+                multiplier: 1.0, constant: 0.0
+        )]
 
         // activate the constraints that's been added to constraints array
         NSLayoutConstraint.activate(constraints)
