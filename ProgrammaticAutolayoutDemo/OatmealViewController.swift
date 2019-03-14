@@ -75,8 +75,7 @@ class OatmealViewController: UIViewController {
     func layoutViews(){
         imageView.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+        orderButton.translatesAutoresizingMaskIntoConstraints = false
         var constraints = [NSLayoutConstraint]()
         //MARK: imageView layout
         // imagView.top = safeView.top
@@ -87,20 +86,17 @@ class OatmealViewController: UIViewController {
         constraints += [NSLayoutConstraint.init(item: imageView, attribute: .height, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .height, multiplier: 0.6, constant: 0.0)]
         // imageview.width = imageview.height
         constraints += [NSLayoutConstraint.init(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 1.0, constant: 0.0)]
-        
-        
-        
+
         //MARK: label layout
         // label.top = safeArea.top
-        constraints += [NSLayoutConstraint.init(item: label, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0.0)]
+        constraints += [NSLayoutConstraint.init(item: label, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1.0, constant: 0.0)]
         // label.leading = safeArea.leading
         constraints += [NSLayoutConstraint.init(item: label, attribute: .leading, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .leading, multiplier: 1.0, constant: 0.0)]
         // label.trailing = safeArea.trailing
         constraints += [NSLayoutConstraint.init(item: label, attribute: .trailing, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .trailing, multiplier: 1.0, constant: 0.0)]
         // label.height = safeArea.height * 0.10
         constraints += [NSLayoutConstraint.init(item: label, attribute: .height, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .height, multiplier: 0.10, constant: 0.0)]
-        
-        
+
         //MARK: orderButton layout
         // orderButton.leading = safeArea.leading
         constraints += [NSLayoutConstraint.init(item: orderButton, attribute: .leading, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .leading, multiplier: 1.0, constant: 0.0)]
@@ -108,10 +104,42 @@ class OatmealViewController: UIViewController {
         constraints += [NSLayoutConstraint.init(item: view.safeAreaLayoutGuide, attribute: .bottom, relatedBy: .equal, toItem: orderButton, attribute: .bottom, multiplier: 1.0, constant: 20.0)]
         // orderButton.height = safeArea.height * 0.20
         constraints += [NSLayoutConstraint.init(item: orderButton, attribute: .height, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .height, multiplier: 0.15, constant: 0.0)]
-        
-       
+
         //MARK: backButton layout
-        
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        // backButton.leading = orderButton.trailing + 10
+        constraints += [NSLayoutConstraint.init(
+                item: backButton, attribute: .leading,
+                relatedBy: .equal,
+                toItem: orderButton, attribute: .trailing,
+                multiplier: 1.0, constant: 10.0)]
+        // backButton.trailing = safeArea.trailing
+        constraints += [NSLayoutConstraint.init(
+                item: backButton, attribute: .trailing,
+                relatedBy: .equal,
+                toItem: view.safeAreaLayoutGuide, attribute: .trailing,
+                multiplier: 1.0, constant: 0.0)]
+        // backButton.firstBaseLine = orderButton.firstBaseLine
+        constraints += [NSLayoutConstraint.init(
+                item: backButton, attribute: .firstBaseline,
+                relatedBy: .equal,
+                toItem: orderButton, attribute: .firstBaseline,
+                multiplier: 1.0, constant: 0.0)]
+        /** this is the aspect ratio **/
+        // backButton.width = orderButton.width * 2/3
+        constraints += [NSLayoutConstraint.init(
+                item: backButton, attribute: .width,
+                relatedBy: .equal,
+                toItem: orderButton, attribute: .width,
+                multiplier: 2/3, constant: 0.0)]
+        // backButton.height = orderButton.height
+        constraints += [NSLayoutConstraint.init(
+                item: backButton, attribute: .height,
+                relatedBy: .equal,
+                toItem: orderButton, attribute: .height,
+                multiplier: 1.0, constant: 0.0)]
+
+
         //add constraints to view
         view.addConstraints(constraints)
         

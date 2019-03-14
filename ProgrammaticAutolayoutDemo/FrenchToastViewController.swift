@@ -178,13 +178,27 @@ class FrenchToastViewController: UIViewController {
 				toItem: orderButton, attribute: .bottom,
 				multiplier: 1.0, constant: 10.0
 		)]
-		// orderButton.height = view.height * 0.10
+		// orderButton.height = view.height * 1/5
 		// to make its height based on the height of the main screen (view)
+//		constraints += [NSLayoutConstraint.init(
+//				item: orderButton, attribute: .height,
+//				relatedBy: .equal,
+//				toItem: view, attribute: .height,
+//				multiplier: 1/5, constant: 00.0
+//		)]
+		// orderButton.width = label.width * 3/5
 		constraints += [NSLayoutConstraint.init(
-				item: orderButton, attribute: .height,
+				item: orderButton, attribute: .width,
 				relatedBy: .equal,
-				toItem: view, attribute: .height,
-				multiplier: 0.10, constant: 00.0
+				toItem: label, attribute: .width,
+				multiplier: 3/5, constant: 00.0
+		)]
+		// orderButton.width = orderButton.height * 3/1
+		constraints += [NSLayoutConstraint.init(
+				item: orderButton, attribute: .width,
+				relatedBy: .equal,
+				toItem: orderButton, attribute: .height,
+				multiplier: 3/1, constant: 00.0
 		)]
 
 		/** BackButton Constraints **/
@@ -199,12 +213,12 @@ class FrenchToastViewController: UIViewController {
 //				multiplier: 1.0, constant: 0.0
 //		)]
 		// backButton.trailing = label.trailing
-		constraints += [NSLayoutConstraint.init(
-				item: backButton, attribute: .trailing,
-				relatedBy: .equal,
-				toItem: label, attribute: .trailing,
-				multiplier: 1.0, constant: 0.0
-		)]
+//		constraints += [NSLayoutConstraint.init(
+//				item: backButton, attribute: .trailing,
+//				relatedBy: .equal,
+//				toItem: label, attribute: .trailing,
+//				multiplier: 1.0, constant: 0.0
+//		)]
 		// backButton.firstBaseLine = orderButton.firstBaseLine
 		// makes the line of the text inside the 2 buttons is the same line
 		constraints += [NSLayoutConstraint.init(
