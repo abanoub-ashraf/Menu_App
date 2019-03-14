@@ -59,7 +59,7 @@ class MakiRollsViewController: UIViewController {
     
     func addViews(){
         view.backgroundColor = UIColor(named:menuItem + "Background")
-        //addImageView()
+        addImageView()
         addLabel()
         addBackButton()
         addOrderButton()
@@ -79,7 +79,7 @@ class MakiRollsViewController: UIViewController {
     //Layout your views here
     func layoutViews() {
         // array of views that's gonna be inside the stack
-        let subViews: [UIView] = [orderButton, backButton, label]
+        let subViews: [UIView] = [orderButton, backButton, imageView, label]
 
         // initialize a stackView and give it the array of its sub views
         let stackView = UIStackView(arrangedSubviews: subViews)
@@ -91,7 +91,15 @@ class MakiRollsViewController: UIViewController {
         stackView.alignment = .leading
 
         // decide the size of each cell in the stack
-        stackView.distribution = .fillEqually
+        // if i stopped using fullEqually i will be able to control the size
+        // with fillEqually i can't control the size of any cell in the stack
+        stackView.distribution = .equalCentering
+
+        // set space between the views inside the stack view
+        stackView.spacing = 10
+
+        // apply custom space after specific view inside the stack view
+        stackView.setCustomSpacing(20, after: backButton)
 
         // add the stackView to the super view
         view.addSubview(stackView)
