@@ -77,6 +77,7 @@ class HamburgerViewController: UIViewController {
 
     //Layout your views here
     func layoutViews() {
+        navigationController?.isNavigationBarHidden = true
         imageView.isHidden = true
 
         // turn off this property of each view
@@ -97,11 +98,16 @@ class HamburgerViewController: UIViewController {
         // another dictionary for measurements
         let metrics: [String: Any] = [:]
 
-        // this tells auto layout this is a horizontal constraint
-        let horizontalConstraints = "H:|[backButton]-[orderButton]|"
+        // this tells auto layout this is a horizontal constraint (from left to right)
+        // (pipe) | represents the super view
+        // - represents the space between sub views, or between sub view and super view
+        // removing the - means no space between sub view and its super view
+        // value between 2 dashes represent the space you want between the views
+        // | defaults to the safeView if there's no spacing, and to the super view if there is
+        let horizontalConstraints = "H:|-15-[backButton]-150-[orderButton]-15-|"
 
-        // this tells auto layout this is a vertical constraint
-        let verticalConstraints = "V:[backButton]-[label]-|"
+        // this tells auto layout this is a vertical constraint (from top to down)
+        let verticalConstraints = "V:|-20-[backButton]-60-[label]-20-|"
 
         // empty array to have the constraints appended to it
         var constraints = [NSLayoutConstraint]()
