@@ -77,7 +77,8 @@ class HamburgerViewController: UIViewController {
 
     //Layout your views here
     func layoutViews() {
-        imageView.isHidden = true
+        navigationController?.isNavigationBarHidden = true
+        imageView.isHidden = false
 
         // turn off this property of each view
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,32 +98,73 @@ class HamburgerViewController: UIViewController {
         // another dictionary for measurements
         let metrics: [String: Any] = [:]
 
-        // this tells auto layout this is a horizontal constraint
-        let horizontalConstraints = "H:|[backButton]-[orderButton]|"
+        // MARK: - Constraints Strings
 
-        // this tells auto layout this is a vertical constraint
-        let verticalConstraints = "V:[backButton]-[label]-|"
+        // this tells auto layout this is a horizontal constraint (from left to right)
+        // (pipe) | represents the super view
+        // - represents the space between sub views, or between sub view and super view
+        // removing the - means no space between sub view and its super view
+        // value between 2 dashes represent the space you want between the views
+        // | defaults to the safeView if there's no spacing, and to the super view if there is
+        /**** 15 between backButton's leading and super view's leading
+              150 between backButton's trailing and orderButton's leading
+              15 between orderButton's trailing and super view's trailing ****/
+        let horizontalConstraints = "H:|-15-[backButton]-150-[orderButton]-15-|"
+
+        // this tells auto layout this is a vertical constraint (from top to down)
+        // pin tha backButton to the safe view's top with 20 of space
+        // [backButton]" means the bottom of the backButton will float
+        // the 20 was making the button cross the safe area so remove it just | means don't cross it
+        let verticalConstraints = "V:|-[backButton]"
+
+        // pin the leading and trailing of the label with the leading and trailing of safe view
+        let labelHConstraints = "H:|-[label]-|"
+
+        /**** 20 between the bottom of the label with the bottom to the super view
+              20 between the top of the label with the bottom of the image
+              the top of the image will float ****/
+        // V:[label] means the top of the label will float
+        let labelVConstraints = "V:[imageView]-20-[label]-20-|"
+
+        // MARK: - Append to the array
 
         // empty array to have the constraints appended to it
         var constraints = [NSLayoutConstraint]()
 
         // create constraints described by visual format string, horizontally
-        constraints = NSLayoutConstraint.constraints(
+        // add the horizontalConstraints constraint to the array
+        constraints += NSLayoutConstraint.constraints(
                 withVisualFormat: horizontalConstraints,
-                options: .alignAllBottom,
+                options: .alignAllTop,
                 metrics: metrics,
                 views: views
         )
 
-        // create constraints described by visual format string, vertically
+        // add the verticalConstraints constraint to the array
         constraints += NSLayoutConstraint.constraints(
                 withVisualFormat: verticalConstraints,
-                options: .alignAllTrailing,
+                options: .alignAllLeading,
                 metrics: metrics,
                 views: views
         )
 
-        // activate the constraints that's in that array
+        // add the labelHConstraints constraint to the array
+        constraints += NSLayoutConstraint.constraints(
+                withVisualFormat: labelHConstraints,
+                options: .alignAllTop,
+                metrics: metrics,
+                views: views
+        )
+
+        // add the labelVConstraints constraint to the array
+        constraints += NSLayoutConstraint.constraints(
+                withVisualFormat: labelVConstraints,
+                options: .alignAllLeading,
+                metrics: metrics,
+                views: views
+        )
+
+        // activate the constraints that's been added to constraints array
         NSLayoutConstraint.activate(constraints)
     }
 
