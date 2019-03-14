@@ -70,11 +70,109 @@ class PeanutButterViewController: UIViewController {
     
     
     //MARK: - Layout
-    
+
     //Layout your views here
-    func layoutViews(){
-    
+    func layoutViews() {
+
+        navigationController?.isNavigationBarHidden = false
+        imageView.isHidden = false
+
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+        orderButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+
+        let views: [String: Any] = [
+            "imageView": imageView,
+            "label": label,
+            "orderButton": orderButton,
+            "backButton": backButton
+        ]
+
+        let marginSpace: CGFloat = 10
+        let padding: CGFloat = 20
+
+        view.directionalLayoutMargins.top = marginSpace
+        view.directionalLayoutMargins.leading = marginSpace
+        view.directionalLayoutMargins.bottom = marginSpace * 2.0
+        view.directionalLayoutMargins.trailing = marginSpace
+
+        let metrics: [String: Any] = [
+            "padding": padding,
+            "height": padding * 3.0
+        ]
+
+        let bottomHConstraints = "H:|-[backButton]-padding-[orderButton]-|"
+        let bottomVConstraints = "V:[backButton(height)]-|"
+
+        let topHConstraints = "H:|-[label]-|"
+        let topVConstraints = "V:|-[label(height)]-padding-[imageView]"
+
+        var constraints = [NSLayoutConstraint]()
+
+        constraints += NSLayoutConstraint.constraints(
+                withVisualFormat: topHConstraints,
+                options: .alignAllTop,
+                metrics: metrics,
+                views: views
+        )
+
+        constraints += NSLayoutConstraint.constraints(
+                withVisualFormat: topVConstraints,
+                options: .alignAllLeading,
+                metrics: metrics,
+                views: views
+        )
+
+        constraints += NSLayoutConstraint.constraints(
+                withVisualFormat: bottomHConstraints,
+                options: .alignAllFirstBaseline,
+                metrics: metrics,
+                views: views
+        )
+
+        constraints += NSLayoutConstraint.constraints(
+                withVisualFormat: bottomVConstraints,
+                options: .alignAllLeading,
+                metrics: metrics,
+                views: views
+        )
+
+        // imageView.height = view.height * 1/4
+        constraints += [NSLayoutConstraint.init(
+                item: imageView, attribute: .height,
+                relatedBy: .equal,
+                toItem: view, attribute: .height,
+                multiplier: 1/4, constant: 0.0
+        )]
+
+        // imageView.width = imageView.height * 3/2
+        constraints += [NSLayoutConstraint.init(
+                item: imageView, attribute: .width,
+                relatedBy: .equal,
+                toItem: imageView, attribute: .height,
+                multiplier: 3/2, constant: 0.0
+        )]
+
+        // orderButton.width = backButton.width * 2/3
+        constraints += [NSLayoutConstraint.init(
+                item: orderButton, attribute: .width,
+                relatedBy: .equal,
+                toItem: backButton, attribute: .width,
+                multiplier: 2/3, constant: 0.0
+        )]
+
+        // orderButton.height = backButton.height
+        constraints += [NSLayoutConstraint.init(
+                item: orderButton, attribute: .height,
+                relatedBy: .equal,
+                toItem: backButton, attribute: .height,
+                multiplier: 1.0, constant: 0.0
+        )]
+
+        NSLayoutConstraint.activate(constraints)
     }
+
 }
 
 
