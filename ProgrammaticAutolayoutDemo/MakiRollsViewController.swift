@@ -59,7 +59,7 @@ class MakiRollsViewController: UIViewController {
     
     func addViews(){
         view.backgroundColor = UIColor(named:menuItem + "Background")
-        addImageView()
+        //addImageView()
         addLabel()
         addBackButton()
         addOrderButton()
@@ -79,7 +79,7 @@ class MakiRollsViewController: UIViewController {
     //Layout your views here
     func layoutViews() {
         // array of views that's gonna be inside the stack
-        let subViews: [UIView] = [imageView, orderButton, backButton, label]
+        let subViews: [UIView] = [orderButton, backButton, label]
 
         // initialize a stackView and give it the array of its sub views
         let stackView = UIStackView(arrangedSubviews: subViews)
@@ -88,7 +88,7 @@ class MakiRollsViewController: UIViewController {
         stackView.axis = .vertical
 
         // the alignment of your views in each cell
-        stackView.alignment = .fill
+        stackView.alignment = .leading
 
         // decide the size of each cell in the stack
         stackView.distribution = .fillEqually
@@ -117,6 +117,30 @@ class MakiRollsViewController: UIViewController {
                 metrics: nil,
                 views: ["stackView": stackView]
         )
+
+        // orderButton.width = stackView.width * 2/3
+        constraints += [NSLayoutConstraint.init(
+                item: orderButton, attribute: .width,
+                relatedBy: .equal,
+                toItem: stackView, attribute: .width,
+                multiplier: 2/3, constant: 0.0
+        )]
+
+        // backButton.width = stackView.width * 1/3
+        constraints += [NSLayoutConstraint.init(
+                item: backButton, attribute: .width,
+                relatedBy: .equal,
+                toItem: stackView, attribute: .width,
+                multiplier: 1/3, constant: 0.0
+        )]
+
+        // label.width = stackView.width * 4/5
+        constraints += [NSLayoutConstraint.init(
+                item: label, attribute: .width,
+                relatedBy: .equal,
+                toItem: stackView, attribute: .width,
+                multiplier: 4/5, constant: 0.0
+        )]
 
         // activate the array of constraints
         NSLayoutConstraint.activate(constraints)
